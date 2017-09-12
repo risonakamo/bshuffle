@@ -4,10 +4,10 @@
     "version":"1",
     "description":"shuffle bandcamp albums when playing on webpage",
 
-    "permissions":["https://*.bandcamp.*/album/*"],
+    "permissions":["https://*.bandcamp.com/album/*"],
 
     "content_scripts":[{
-        "matches":["https://*.bandcamp.*/album/*"],
+        "matches":["https://*.bandcamp.com/album/*"],
         "js":["bshuffle.js"],
         "run_at":"document_end"
     }]
