@@ -3,17 +3,21 @@ class _bshuffle
     /*
         --- variables ---
         element-array songs: array of clickable divs used to start songs. not a nodelist.
+        int songindex
         mutationobserver timewatcher
     */
     constructor()
     {
         this.songs=[];
+        this.songindex=0;
         var e_songs=document.querySelectorAll(".play_status");
 
         for (var x=0,l=e_songs.length;x<l;x++)
         {
             this.songs.push(e_songs[x]);
         }
+
+        this.randomiseArray(this.songs);
 
         this.playrandom();
     }
@@ -29,7 +33,7 @@ class _bshuffle
         this.timewatcher=new MutationObserver((m)=>{
             if (m[1].addedNodes[0].data==fintime)
             {
-                console.log("%cbshuffle","color:#b578cc","song end");
+                console.log("%cbshuffle","color:#FF4A74","song end");
                 this.timewatcher.disconnect();
                 this.playrandom();
             }
@@ -38,10 +42,10 @@ class _bshuffle
         this.timewatcher.observe(e_curtime,{childList:true});
     }
 
-    //play random song and remove it, also runs songstart operations
+    //play random song, increment songindex
     playrandom()
     {
-        if (!this.songs.length)
+        if (this.songindex>=this.songs.length)
         {
             return;
         }
@@ -51,12 +55,24 @@ class _bshuffle
             this.timewatcher.disconnect();
         }
 
-        console.log(this.songs);
-        var randomsong=Math.floor(Math.random()*this.songs.length);
-
-        this.songs[randomsong].click();
-        this.songs.splice(randomsong,1);
+        this.songs[this.songindex].click();
+        this.songindex++;
         this.songstart();
+    }
+
+    randomiseArray(array)
+    {
+        for (var x=array.length;x>0;x--)
+        {
+            this.switchItem(Math.floor(Math.random()*x),x-1,array);
+        }
+    }
+
+    switchItem(a,b,array)
+    {
+        var t=array[a];
+        array[a]=array[b];
+        array[b]=t;
     }
 }
 
