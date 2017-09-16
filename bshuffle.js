@@ -28,7 +28,7 @@ class _bshuffle
         var e_curtime=document.querySelector(".time_elapsed");
         var fintime=document.querySelector(".time_total").innerText;
 
-        console.log("playing song with time: ",fintime);
+        console.log("%cbshuffle","color:#FF4A74","playing song with time: ",fintime);
 
         this.timewatcher=new MutationObserver((m)=>{
             if (m[1].addedNodes[0].data==fintime)
