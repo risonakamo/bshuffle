@@ -1,11 +1,5 @@
 class _bshuffle
 {
-    /*
-        --- variables ---
-        element-array songs: array of clickable divs used to start songs. not a nodelist.
-        int songindex
-        mutationobserver timewatcher
-    */
     constructor()
     {
         this.songs=[];
@@ -19,7 +13,7 @@ class _bshuffle
 
         this.randomiseArray(this.songs);
 
-        this.playrandom();
+        this.deployShuffleButton();
     }
 
     //hook end time and begin observing current time for when it matches end time
@@ -28,7 +22,9 @@ class _bshuffle
         var e_curtime=document.querySelector(".time_elapsed");
         var fintime=document.querySelector(".time_total").innerText;
 
-        console.log("%cbshuffle","color:#FF4A74","playing song with time: ",fintime);
+        console.log("elementhook test",e_curtime,fintime);
+
+        console.log("%cbshuffle","color:#FF4A74",`playing song ${this.songindex} with time: `,fintime);
 
         this.timewatcher=new MutationObserver((m)=>{
             if (m[1].addedNodes[0].data==fintime)
@@ -47,6 +43,7 @@ class _bshuffle
     {
         if (this.songindex>=this.songs.length)
         {
+            console.log("%cbshuffle","color:#FF4A74","no more songs");
             return;
         }
 
@@ -73,6 +70,17 @@ class _bshuffle
         var t=array[a];
         array[a]=array[b];
         array[b]=t;
+    }
+
+    deployShuffleButton()
+    {
+        var playbutton=document.querySelector(".playbutton");
+        var shufflebutton=playbutton.cloneNode();
+        playbutton.parentElement.appendChild(shufflebutton);
+
+        shufflebutton.addEventListener("click",(e)=>{
+            this.playrandom();
+        });
     }
 }
 
