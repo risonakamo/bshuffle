@@ -4,6 +4,7 @@ class _bshuffle
     {
         this.songs=[];
         this.songindex=0;
+        this.mouseTrack=0;
         var e_songs=document.querySelectorAll(".play_status");
 
         for (var x=0,l=e_songs.length;x<l;x++)
@@ -14,6 +15,7 @@ class _bshuffle
         this.randomiseArray(this.songs);
 
         this.deployShuffleButton();
+        this.startmouseTrack();
     }
 
     //hook end time and begin observing current time for when it matches end time
@@ -27,15 +29,25 @@ class _bshuffle
         console.log("%cbshuffle","color:#FF4A74",`playing song ${this.songindex} with time: `,fintime);
 
         this.timewatcher=new MutationObserver((m)=>{
-            if (m[1].addedNodes[0].data==fintime)
+            if (m[1].addedNodes[0].data==fintime && this.mouseTrack==0)
             {
-                console.log("%cbshuffle","color:#FF4A74","song end");
-                this.timewatcher.disconnect();
-                this.playrandom();
+                this.nextsong();
+            }
+
+            else if (m[1].addedNodes[0].data==fintime && this.mouseTrack!=0)
+            {
+                this.queueNext=1;
             }
         });
 
         this.timewatcher.observe(e_curtime,{childList:true});
+    }
+
+    nextsong()
+    {
+        console.log("%cbshuffle","color:#FF4A74","song end");
+        this.timewatcher.disconnect();
+        this.playrandom();
     }
 
     //play random song, increment songindex
@@ -80,6 +92,33 @@ class _bshuffle
 
         shufflebutton.addEventListener("click",(e)=>{
             this.playrandom();
+        });
+    }
+
+    startmouseTrack()
+    {
+        console.log(document.body);
+        document.body.addEventListener("mousedown",(e)=>{
+            this.mouseTrack++;
+        });
+
+        document.body.addEventListener("mouseup",(e)=>{
+            this.mouseTrack--;
+
+            if (this.queueNext)
+            {
+                this.queueNext=0;
+
+                if (document.querySelector(".time_elapsed").innerText
+                    ==document.querySelector(".time_total").innerText)
+                {
+                    this.nextsong();
+                }
+            }
+        });
+
+        document.querySelector(".progbar .thumb").addEventListener("mousedown",(e)=>{
+            this.mouseTrack++;
         });
     }
 }
