@@ -11,9 +11,10 @@ int mouseTracker; //if mouse button is pressed 0=up,1=down
 void songstart(); //hook operations when song begins
 void nextsong(); //disconnect watcher and play random
 void playrandom(); //play random song
-void deployShuffleButton();
 
-void mouseTrack();
+void deployShuffleButton(); //place shuffle button in dom
+void startmouseTrack();
+void deployNextButton();
 
 /*--- utility functions ---*/
 void randomiseArray(array array); //randomises array in place

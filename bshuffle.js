@@ -14,6 +14,9 @@ class _bshuffle
 
         this.randomiseArray(this.songs);
 
+        console.log("loaded songs");
+        console.log(this.songs);
+
         this.deployShuffleButton();
         this.startmouseTrack();
     }
@@ -92,6 +95,7 @@ class _bshuffle
 
         shufflebutton.addEventListener("click",(e)=>{
             this.playrandom();
+            this.deployNextButton();
         });
     }
 
@@ -120,6 +124,20 @@ class _bshuffle
         document.querySelector(".progbar .thumb").addEventListener("mousedown",(e)=>{
             this.mouseTrack++;
         });
+    }
+
+    deployNextButton()
+    {
+        var originalNext=document.querySelector(".next_cell");
+        var shuffleNext=originalNext.cloneNode(true);
+
+        shuffleNext.addEventListener("click",(e)=>{
+            this.nextsong();
+        });
+
+        originalNext.style["display"]="none";
+        originalNext.parentElement.children[1].style["display"]="none";
+        originalNext.parentElement.appendChild(shuffleNext);
     }
 }
 
