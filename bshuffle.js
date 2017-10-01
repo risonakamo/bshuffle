@@ -49,6 +49,7 @@ class _bshuffle
     nextsong()
     {
         console.log("%cbshuffle","color:#FF4A74","song end");
+        this.songs[this.songindex-1].parentElement.parentElement.nextElementSibling.firstElementChild.innerText="✔.";
         this.timewatcher.disconnect();
         this.playrandom();
     }
