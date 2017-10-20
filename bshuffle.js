@@ -33,7 +33,8 @@ class _bshuffle
 
         console.log("elementhook test",e_curtime,fintime);
 
-        console.log("%cbshuffle","color:#FF4A74",`playing song ${this.songindex} with time: `,fintime);
+        console.log("%cbshuffle","color:#FF4A74",
+            `playing song ${this.songindex} with time: `,fintime);
 
         this.timewatcher=new MutationObserver((m)=>{
             if (m[1].addedNodes[0].data==fintime && this.mouseTrack==0)
@@ -53,7 +54,13 @@ class _bshuffle
     nextsong()
     {
         console.log("%cbshuffle","color:#FF4A74","song end");
-        this.songs[this.songindex].element.parentElement.parentElement.nextElementSibling.firstElementChild.innerText="✔.";
+
+        if (this.songindex<this.songs.length)
+        {
+            this.songs[this.songindex].element.parentElement
+                .parentElement.nextElementSibling.firstElementChild.innerText="✔.";
+        }
+
         this.timewatcher.disconnect();
         this.playrandom();
     }
@@ -61,9 +68,10 @@ class _bshuffle
     //play random song, increment songindex
     playrandom()
     {
-        if (this.songindex>=this.songs.length)
+        if (this.songindex>=this.songs.length-1)
         {
             console.log("%cbshuffle","color:#FF4A74","no more songs");
+            this.endPlay();
             return;
         }
 
@@ -74,6 +82,7 @@ class _bshuffle
 
         this.songindex++;
         this.songs[this.songindex].element.click();
+
         this.songstart();
     }
 
@@ -147,7 +156,33 @@ class _bshuffle
 
     confirmSong()
     {
-        console.log(this.songs[this.songindex].title);
+        if (this.songs[this.songindex].title==this.currentPlayElements.title.innerText
+            && this.currentPlayElements.button.classList.contains("playing"))
+        {
+            return true;
+        }
+
+        console.log("bshuffle desynced. current song:",
+            this.currentPlayElements.title.innerText,
+            ", correct song:",
+            this.songs[this.songindex].title);
+
+        return false;
+    }
+
+    endPlay()
+    {
+        if (this.currentPlayElements.button.classList.contains("playing"))
+        {
+            this.currentPlayElements.button.click();
+        }
+
+        else if (this.currentPlayElements.button.classList.contains("busy"))
+        {
+            setTimeout(()=>{
+                this.endPlay();
+            },100);
+        }
     }
 }
 
