@@ -1,10 +1,14 @@
 /*--- variables ---*/
-object-array songs; //array of objects holding song information, randomised
-                    //element: clickable div to start song
-                    //title: title of song
-object currentPlayElements; /*object containing elements needed to check what is currently playing
-                              currentPlayElements.title: title element
-                              currentPlayElements.button: play button*/
+//array of objects holding song information, gets randomised
+object-array songs {
+    element element; //clickable div to start song
+    string title; //title of song
+};
+//object containing elements needed to check what is currently playing
+object currentPlayElements {
+    element button; //play button
+    element title; //element containing title
+};
 int songindex; //index of current song
 mutationobserver timewatcher;
 
