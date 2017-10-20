@@ -3,19 +3,23 @@ class _bshuffle
     constructor()
     {
         this.songs=[];
-        this.songindex=0;
+        this.songindex=-1;
         this.mouseTrack=0;
+
+        this.currentPlayElements={
+            title:document.querySelector("#trackInfoInner span.title"),
+            button:document.querySelector(".playbutton")
+        };
+
         var e_songs=document.querySelectorAll(".play_status");
+        var e_songtitles=document.querySelectorAll("#track_table .title a span");
 
         for (var x=0,l=e_songs.length;x<l;x++)
         {
-            this.songs.push(e_songs[x]);
+            this.songs.push({element:e_songs[x],title:e_songtitles[x].innerText});
         }
 
         this.randomiseArray(this.songs);
-
-        console.log("loaded songs");
-        console.log(this.songs);
 
         this.deployShuffleButton();
         this.startmouseTrack();
@@ -49,7 +53,7 @@ class _bshuffle
     nextsong()
     {
         console.log("%cbshuffle","color:#FF4A74","song end");
-        this.songs[this.songindex-1].parentElement.parentElement.nextElementSibling.firstElementChild.innerText="✔.";
+        this.songs[this.songindex].element.parentElement.parentElement.nextElementSibling.firstElementChild.innerText="✔.";
         this.timewatcher.disconnect();
         this.playrandom();
     }
@@ -68,8 +72,8 @@ class _bshuffle
             this.timewatcher.disconnect();
         }
 
-        this.songs[this.songindex].click();
         this.songindex++;
+        this.songs[this.songindex].element.click();
         this.songstart();
     }
 
@@ -139,6 +143,11 @@ class _bshuffle
         originalNext.style["display"]="none";
         originalNext.parentElement.children[1].style["display"]="none";
         originalNext.parentElement.appendChild(shuffleNext);
+    }
+
+    confirmSong()
+    {
+        console.log(this.songs[this.songindex].title);
     }
 }
 
