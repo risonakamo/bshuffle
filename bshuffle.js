@@ -31,10 +31,8 @@ class _bshuffle
         var e_curtime=document.querySelector(".time_elapsed");
         var fintime=document.querySelector(".time_total").innerText;
 
-        console.log("elementhook test",e_curtime,fintime);
-
         console.log("%cbshuffle","color:#FF4A74",
-            `playing song ${this.songindex} with time: `,fintime);
+            `playing song ${this.songindex}: ${this.songs[this.songindex].title} with time: `,fintime);
 
         this.timewatcher=new MutationObserver((m)=>{
             if (m[1].addedNodes[0].data==fintime && this.mouseTrack==0)
@@ -129,7 +127,6 @@ class _bshuffle
 
     startmouseTrack()
     {
-        console.log(document.body);
         document.body.addEventListener("mousedown",(e)=>{
             this.mouseTrack++;
         });
@@ -172,7 +169,8 @@ class _bshuffle
     {
         if (this.songs[this.songindex].title!=this.currentPlayElements.title.innerText)
         {
-            console.log("bshuffle desynced. current song:",
+            console.log("%cbshuffle","color:#FF4A74",
+                "desynced. current song:",
                 this.currentPlayElements.title.innerText,
                 ", correct song:",
                 this.songs[this.songindex].title);
