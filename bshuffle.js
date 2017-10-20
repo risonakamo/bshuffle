@@ -49,6 +49,16 @@ class _bshuffle
         });
 
         this.timewatcher.observe(e_curtime,{childList:true});
+
+        setTimeout(()=>{
+            this.confirmSong((res)=>{
+                if (!res)
+                {
+                    this.playrandom(1);
+                }
+            });
+        },500);
+
     }
 
     nextsong()
@@ -66,7 +76,7 @@ class _bshuffle
     }
 
     //play random song, increment songindex
-    playrandom()
+    playrandom(retry=0)
     {
         if (this.songindex>=this.songs.length-1)
         {
@@ -80,7 +90,11 @@ class _bshuffle
             this.timewatcher.disconnect();
         }
 
-        this.songindex++;
+        if (!retry)
+        {
+            this.songindex++;
+        }
+
         this.songs[this.songindex].element.click();
 
         this.songstart();
@@ -154,20 +168,35 @@ class _bshuffle
         originalNext.parentElement.appendChild(shuffleNext);
     }
 
-    confirmSong()
+    confirmSong(callback)
     {
-        if (this.songs[this.songindex].title==this.currentPlayElements.title.innerText
-            && this.currentPlayElements.button.classList.contains("playing"))
+        if (this.songs[this.songindex].title!=this.currentPlayElements.title.innerText)
         {
-            return true;
+            console.log("bshuffle desynced. current song:",
+                this.currentPlayElements.title.innerText,
+                ", correct song:",
+                this.songs[this.songindex].title);
+
+            callback(false);
+            return;
         }
 
-        console.log("bshuffle desynced. current song:",
-            this.currentPlayElements.title.innerText,
-            ", correct song:",
-            this.songs[this.songindex].title);
+        if (this.currentPlayElements.button.classList.contains("busy"))
+        {
+            setTimeout(()=>{
+                this.confirmSong(callback);
+            },500);
+            return;
+        }
 
-        return false;
+        if (!this.currentPlayElements.button.classList.contains("playing"))
+        {
+            callback(false);
+            return;
+        }
+
+        callback(true);
+        return;
     }
 
     endPlay()
@@ -181,7 +210,7 @@ class _bshuffle
         {
             setTimeout(()=>{
                 this.endPlay();
-            },100);
+            },500);
         }
     }
 }
