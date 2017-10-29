@@ -32,7 +32,7 @@ class _bshuffle
         var fintime=document.querySelector(".time_total").innerText;
 
         console.log("%cbshuffle","color:#FF4A74",
-            `playing song ${this.songindex}: ${this.songs[this.songindex].title} with time: `,fintime);
+            `playing song ${this.songindex+1} / ${this.songs.length}: ${this.songs[this.songindex].title} with time: `,fintime);
 
         this.timewatcher=new MutationObserver((m)=>{
             if (m[1].addedNodes[0].data==fintime && this.mouseTrack==0)
@@ -122,6 +122,7 @@ class _bshuffle
         shufflebutton.addEventListener("click",(e)=>{
             this.playrandom();
             this.deployNextButton();
+            shufflebutton.parentElement.removeChild(shufflebutton);
         });
     }
 
