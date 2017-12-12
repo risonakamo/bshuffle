@@ -21,7 +21,7 @@ void songstart(); //hook operations when song begins
 void nextsong(); //disconnect watcher and play random
 void playrandom(int retry); //play random song, specify retry=1 to playsong
                             //without incrementing index (retry playing song)
-void endPlay();
+void endPlay(); //stop playing and check to make sure it has stopped
 
 /*--- one times ---*/
 void deployShuffleButton(); //place shuffle button in dom

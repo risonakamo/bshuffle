@@ -198,8 +198,9 @@ class _bshuffle
         return;
     }
 
-    endPlay()
+    endPlay(check=0)
     {
+        console.log(`end play check ${check}`);
         if (this.currentPlayElements.button.classList.contains("playing"))
         {
             this.currentPlayElements.button.click();
@@ -210,6 +211,13 @@ class _bshuffle
             setTimeout(()=>{
                 this.endPlay();
             },500);
+        }
+
+        if (check<3)
+        {
+            setTimeout(()=>{
+                this.endPlay(check+1);
+            },1000);
         }
     }
 }
