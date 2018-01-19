@@ -76,7 +76,7 @@ class _bshuffle
     //play random song, increment songindex
     playrandom(retry=0)
     {
-        if (this.songindex>=this.songs.length-1)
+        if (this.songindex>=this.songs.length-1 && !retry)
         {
             console.log("%cbshuffle","color:#FF4A74","no more songs");
             this.endPlay();
