@@ -117,6 +117,10 @@ class _bshuffle
     {
         var playbutton=document.querySelector(".playbutton");
         var shufflebutton=playbutton.cloneNode();
+
+        shufflebutton.classList.add("shuffle");
+        shufflebutton.innerHTML="⤭";
+
         playbutton.parentElement.appendChild(shufflebutton);
 
         shufflebutton.addEventListener("click",(e)=>{

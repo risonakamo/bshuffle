@@ -1,7 +1,7 @@
 {
     "manifest_version":2,
     "name":"bandcamp shuffle",
-    "version":"1.1.1",
+    "version":"1.2.0",
     "description":"shuffle bandcamp albums when playing on webpage",
 
     "permissions":["https://*.bandcamp.com/album/*"],
@@ -9,6 +9,7 @@
     "content_scripts":[{
         "matches":["https://*.bandcamp.com/album/*"],
         "js":["bshuffle.js"],
+        "css":["bshuffle.css"],
         "run_at":"document_end"
     }]
 }

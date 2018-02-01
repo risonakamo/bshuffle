@@ -1,0 +1,19 @@
+a[role="button"]:hover
+{
+    text-decoration: none !important;
+}
+
+.playbutton.shuffle
+{
+    font-size: 30px;
+    text-align: center;
+    padding-top: 16px;
+    margin-top: 7px;
+    box-sizing: border-box;
+    color: #222222;
+}
+
+.playbutton.shuffle::after
+{
+    content: none !important;
+}
