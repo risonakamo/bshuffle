@@ -1,21 +1,24 @@
 {
-    "manifest_version":2,
-    "name":"bandcamp shuffle",
-    "version":"1.3.0",
+    "name": "bandcamp shuffle",
+    "short_name": "bshuffle",
     "description":"shuffle bandcamp albums when playing on webpage",
+    "version":"1.4.0",
+    "homepage_url":"https://github.com/risonakamo/bshuffle",
+    "manifest_version":3,
+    "author":"risonakamo",
 
-    "permissions":["https://*.bandcamp.com/album/*"],
+    "content_scripts": [
+        {
+            "matches": ["https://*.bandcamp.com/album/*"],
+            "js": ["bshuffle.js"],
+            "css": ["bshuffle.css"],
+            "run_at": "document_end"
+        }
+    ],
 
-    "content_scripts":[{
-        "matches":["https://*.bandcamp.com/album/*"],
-        "js":["bshuffle.js"],
-        "css":["bshuffle.css"],
-        "run_at":"document_end"
-    }],
-
-    "icons":{
-        "16":"icons/16.png",
-        "48":"icons/48.png",
-        "128":"icons/128.png"
+    "icons": {
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
     }
 }
